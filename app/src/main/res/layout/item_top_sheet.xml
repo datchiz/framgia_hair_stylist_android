@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
             android:onClick="@{()->viewModel.onItemFilterClick(tabFilter)}"
             app:cardBackgroundColor="@{tabFilter == viewModel.tabFilter?@color/color_green_300:@color/color_white}"

@@ -58,4 +58,7 @@
     <string name="tile_service">Service:</string>
     <string name="title_booking_method">Booking method:</string>
     <string name="title_note">Note</string>
+    <string name="title_scheduler_failure">Have some error, please try again !!!</string>
+    <string name="tilte_finished">Finished</string>
+    <string name="title_cancel">Cancel</string>
 </resources>

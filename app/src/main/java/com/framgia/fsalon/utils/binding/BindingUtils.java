@@ -36,10 +36,13 @@ public class BindingUtils {
         view.setImageResource(src);
     }
 
-    @BindingAdapter({"recyclerAdapter"})
+    @BindingAdapter(value = {"recyclerAdapter", "layoutManager"}, requireAll = false)
     public static void setAdapterForRecyclerView(RecyclerView recyclerView,
-                                                 RecyclerView.Adapter adapter) {
+                                                 RecyclerView.Adapter adapter,
+                                                 RecyclerView.LayoutManager layoutManager) {
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DeviderItemDecoration(1));
     }
 
     @BindingAdapter({"searchableSpinnerAdapter"})
