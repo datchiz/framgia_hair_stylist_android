@@ -49,4 +49,6 @@
     <string name="title_congrat">Congratulations</string>
     <string name="msg_success_booking">You have successfully booked with these informations</string>
     <string name="action_ok">OK</string>
+    <string name="title_yesterday">Yesterday</string>
+    <string name="title_calendar">Calendar</string>
 </resources>
