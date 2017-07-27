@@ -1,4 +1,5 @@
 package com.framgia.fsalon.screen.scheduler;
+
 import com.framgia.fsalon.BasePresenter;
 import com.framgia.fsalon.BaseViewModel;
 
@@ -10,6 +11,7 @@ interface SchedulerContract {
      * View.
      */
     interface ViewModel extends BaseViewModel<Presenter> {
+        void onItemFilterClick(@SchedulerViewModel.TabFilter int tab);
     }
 
     /**

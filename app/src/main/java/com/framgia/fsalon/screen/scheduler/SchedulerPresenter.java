@@ -19,4 +19,5 @@ final class SchedulerPresenter implements SchedulerContract.Presenter {
     @Override
     public void onStop() {
     }
+
 }

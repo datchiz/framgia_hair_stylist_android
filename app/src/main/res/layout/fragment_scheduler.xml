@@ -2,9 +2,12 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     >
 
     <data>
+
+        <import type="com.framgia.fsalon.screen.scheduler.SchedulerViewModel.TabFilter"/>
 
         <variable
             name="viewModel"
@@ -21,7 +24,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_green_300"
             android:orientation="vertical"
             app:behavior_peekHeight="?attr/actionBarSize"
             app:layout_behavior="@string/top_sheet_behavior">
@@ -29,29 +31,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_border_white"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_3"
-                    android:text="@string/title_tomorrow"
-                    android:textColor="@color/color_white"
-                    android:textStyle="bold"/>
+                <include
+                    android:id="@+id/text_tomorrow"
+                    layout="@layout/item_top_sheet"
+                    bind:description="@{@string/title_tomorrow}"
+                    bind:tabFilter="@{TabFilter.TAB_TOMORROW}"
+                    bind:viewModel="@{viewModel}"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_border_white"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_3"
-                    android:text="@string/title_calendar"
-                    android:textColor="@color/color_white"
-                    android:textStyle="bold"/>
+                <include
+                    android:id="@+id/text_calendar"
+                    layout="@layout/item_top_sheet"
+                    bind:description="@{@string/title_calendar}"
+                    bind:tabFilter="@{TabFilter.TAB_CALENDAR}"
+                    bind:viewModel="@{viewModel}"
+                    />
+
             </LinearLayout>
 
             <LinearLayout
@@ -59,29 +56,22 @@
                 android:layout_height="@dimen/dp_50"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_border_white"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_3"
-                    android:text="@string/title_today"
-                    android:textColor="@color/color_white"
-                    android:textStyle="bold"
+                <include
+                    android:id="@+id/text_today"
+                    layout="@layout/item_top_sheet"
+                    bind:description="@{@string/title_today}"
+                    bind:tabFilter="@{TabFilter.TAB_TODAY}"
+                    bind:viewModel="@{viewModel}"
                     />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_border_white"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_3"
-                    android:text="@string/title_yesterday"
-                    android:textColor="@color/color_white"
-                    android:textStyle="bold"/>
-
+                <include
+                    android:id="@+id/text_yesterday"
+                    layout="@layout/item_top_sheet"
+                    bind:description="@{@string/title_yesterday}"
+                    bind:tabFilter="@{TabFilter.TAB_YESTERDAY}"
+                    bind:viewModel="@{viewModel}"
+                    />
+                
             </LinearLayout>
 
             <LinearLayout
