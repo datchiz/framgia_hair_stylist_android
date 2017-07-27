@@ -5,7 +5,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 
 import com.framgia.fsalon.BR;
@@ -16,6 +15,8 @@ import com.framgia.fsalon.data.model.BookingResponse;
 import com.framgia.fsalon.data.model.DateBooking;
 import com.framgia.fsalon.data.model.Salon;
 import com.framgia.fsalon.data.model.Stylist;
+import com.framgia.fsalon.screen.success.SuccessActivity;
+import com.framgia.fsalon.utils.navigator.Navigator;
 
 import java.util.List;
 
@@ -43,10 +44,12 @@ public class BookingViewModel extends BaseObservable implements BookingContract.
     private String mNameError;
     private String mTimeError;
     private String mSalonError;
+    private Navigator mNavigator;
 
     public BookingViewModel(FragmentActivity activity) {
         mActivity = activity;
         mContext = activity.getApplicationContext();
+        mNavigator = new Navigator(mActivity);
     }
 
     @Override
@@ -62,9 +65,7 @@ public class BookingViewModel extends BaseObservable implements BookingContract.
 
     @Override
     public void onBookSuccess(BookingOder bookingOder) {
-        Snackbar.make(mActivity.findViewById(android.R.id.content),
-            getStringRes(R.string.msg_book_success),
-            Snackbar.LENGTH_LONG).show();
+        mNavigator.startActivity(SuccessActivity.getInstance(mNavigator.getContext(), bookingOder));
     }
 
     @Override
