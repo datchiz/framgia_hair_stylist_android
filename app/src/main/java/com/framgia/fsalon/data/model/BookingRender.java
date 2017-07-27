@@ -2,6 +2,8 @@ package com.framgia.fsalon.data.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.framgia.fsalon.R;
 import com.google.gson.annotations.Expose;
@@ -16,7 +18,7 @@ import static com.framgia.fsalon.utils.Constant.OFF_WORK;
 /**
  * Created by framgia on 7/21/17.
  */
-public class BookingRender extends BaseObservable{
+public class BookingRender extends BaseObservable implements Parcelable {
     @SerializedName("id")
     @Expose
     private int mId;
@@ -47,6 +49,31 @@ public class BookingRender extends BaseObservable{
     @SerializedName("order_booking")
     @Expose
     private List<BookingOder> mOrderBooking;
+
+    protected BookingRender(Parcel in) {
+        mId = in.readInt();
+        mDay = in.readString();
+        mTimeStart = in.readString();
+        mTotalSlot = in.readInt();
+        mStatus = in.readInt();
+        mDepartmentId = in.readInt();
+        mCreatedAt = in.readString();
+        mUpdatedAt = in.readString();
+        mStatusLabel = in.readString();
+        mOrderBooking = in.createTypedArrayList(BookingOder.CREATOR);
+    }
+
+    public static final Creator<BookingRender> CREATOR = new Creator<BookingRender>() {
+        @Override
+        public BookingRender createFromParcel(Parcel in) {
+            return new BookingRender(in);
+        }
+
+        @Override
+        public BookingRender[] newArray(int size) {
+            return new BookingRender[size];
+        }
+    };
 
     @Bindable
     public int getResourceId() {
@@ -154,5 +181,24 @@ public class BookingRender extends BaseObservable{
 
     public void setOrderBooking(List<BookingOder> orderBooking) {
         mOrderBooking = orderBooking;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mDay);
+        dest.writeString(mTimeStart);
+        dest.writeInt(mTotalSlot);
+        dest.writeInt(mStatus);
+        dest.writeInt(mDepartmentId);
+        dest.writeString(mCreatedAt);
+        dest.writeString(mUpdatedAt);
+        dest.writeString(mStatusLabel);
+        dest.writeTypedList(mOrderBooking);
     }
 }

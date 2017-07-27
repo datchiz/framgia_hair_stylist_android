@@ -1,12 +1,15 @@
 package com.framgia.fsalon.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by THM on 7/20/2017.
  */
-public class Stylist {
+public class Stylist implements Parcelable{
     @Expose
     @SerializedName("id")
     private int mId;
@@ -53,6 +56,35 @@ public class Stylist {
     public Stylist(String name) {
         mName = name;
     }
+
+    protected Stylist(Parcel in) {
+        mId = in.readInt();
+        mName = in.readString();
+        mEmail = in.readString();
+        mPhone = in.readString();
+        mBirthDay = in.readString();
+        mAvatar = in.readString();
+        mGender = in.readString();
+        mPermission = in.readInt();
+        mExperience = in.readString();
+        mSpecialize = in.readString();
+        mAboutMe = in.readString();
+        mDepartmentId = in.readInt();
+        mCreateAt = in.readString();
+        mUpdatedAt = in.readString();
+    }
+
+    public static final Creator<Stylist> CREATOR = new Creator<Stylist>() {
+        @Override
+        public Stylist createFromParcel(Parcel in) {
+            return new Stylist(in);
+        }
+
+        @Override
+        public Stylist[] newArray(int size) {
+            return new Stylist[size];
+        }
+    };
 
     public int getId() {
         return mId;
@@ -169,5 +201,28 @@ public class Stylist {
     @Override
     public String toString() {
         return mName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mName);
+        dest.writeString(mEmail);
+        dest.writeString(mPhone);
+        dest.writeString(mBirthDay);
+        dest.writeString(mAvatar);
+        dest.writeString(mGender);
+        dest.writeInt(mPermission);
+        dest.writeString(mExperience);
+        dest.writeString(mSpecialize);
+        dest.writeString(mAboutMe);
+        dest.writeInt(mDepartmentId);
+        dest.writeString(mCreateAt);
+        dest.writeString(mUpdatedAt);
     }
 }
