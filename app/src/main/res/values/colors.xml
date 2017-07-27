@@ -21,4 +21,8 @@
     <color name="color_green">#4CAF50</color>
     <color name="color_teal_500">#00a388</color>
     <color name="color_green_300">#79bd8f</color>
+    <color name="color_brown_50">#ebebeb</color>
+    <color name="color_grey_100">#F5F5F5</color>
+    <color name="color_grey_500">#9E9E9E</color>
+    <color name="color_grey_200">#EEEEEE</color>
 </resources>
