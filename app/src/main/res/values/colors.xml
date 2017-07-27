@@ -25,4 +25,6 @@
     <color name="color_grey_100">#F5F5F5</color>
     <color name="color_grey_500">#9E9E9E</color>
     <color name="color_grey_200">#EEEEEE</color>
+    <color name="color_accent_700">#FF6A00</color>
+    <color name="color_yellow_200">#FFFF9D</color>
 </resources>

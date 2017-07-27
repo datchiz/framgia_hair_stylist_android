@@ -21,6 +21,12 @@
         tools:context="com.framgia.fsalon.screen.customer.CustomerActivity"
         >
 
+        <android.support.v7.widget.SearchView
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            bind:theme="@style/NoActionBarTheme.SearchView"/>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
