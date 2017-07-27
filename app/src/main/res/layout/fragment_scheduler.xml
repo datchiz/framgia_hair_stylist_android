@@ -2,7 +2,6 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
@@ -22,14 +21,73 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/color_green_300"
             android:orientation="vertical"
-            app:behavior_peekHeight="@dimen/dp_40"
+            app:behavior_peekHeight="?attr/actionBarSize"
             app:layout_behavior="@string/top_sheet_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:background="@color/color_tear_500"
+                android:layout_height="@dimen/dp_50"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_border_white"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_3"
+                    android:text="@string/title_tomorrow"
+                    android:textColor="@color/color_white"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_border_white"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_3"
+                    android:text="@string/title_calendar"
+                    android:textColor="@color/color_white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_border_white"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_3"
+                    android:text="@string/title_today"
+                    android:textColor="@color/color_white"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_border_white"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_3"
+                    android:text="@string/title_yesterday"
+                    android:textColor="@color/color_white"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 >
@@ -40,8 +98,9 @@
                     android:layout_marginLeft="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_weight="1"
-                    android:padding="@dimen/dp_3"
                     android:text="@string/action_pick_date"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/sp_20"
                     android:textStyle="bold"/>
 
                 <ImageView
@@ -49,9 +108,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginRight="@dimen/dp_20"
-                    android:src="@drawable/ic_swipe_down_24dp"
-                    tools:ignore="ContentDescription"/>
+                    android:src="@drawable/ic_swipe_down_24dp"/>
             </LinearLayout>
+
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

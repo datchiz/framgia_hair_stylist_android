@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#26C6DA</color>
-    <color name="colorPrimaryDark">#00838F</color>
+    <color name="color_cyan_400">#26C6DA</color>
+    <color name="colorPrimaryDark">#00494F</color>
+    <color name="colorPrimary">#00838F</color>
     <color name="colorAccent">#00838F</color>
     <color name="color_material_brown_100">#CCCCCC</color>
     <color name="color_material_brown_300">#888888</color>
@@ -18,6 +19,6 @@
     <color name="color_cyan_900">#006064</color>
     <color name="color_red">#F44336</color>
     <color name="color_green">#4CAF50</color>
-    <color name="color_tear_500">#00a388</color>
+    <color name="color_teal_500">#00a388</color>
     <color name="color_green_300">#79bd8f</color>
 </resources>
