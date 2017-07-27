@@ -11,6 +11,8 @@ import android.view.MenuItem;
 
 import com.framgia.fsalon.BR;
 import com.framgia.fsalon.R;
+import com.framgia.fsalon.screen.customer.CustomerAdapter;
+import com.framgia.fsalon.screen.customer.CustomerFragment;
 import com.framgia.fsalon.screen.scheduler.SchedulerFragment;
 
 import java.lang.annotation.Retention;
@@ -73,6 +75,7 @@ public class AdminHomeViewModel extends BaseObservable implements AdminHomeContr
         mActivity = activity;
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(SchedulerFragment.newInstance());
+        fragments.add(CustomerFragment.newInstance());
         mAdapter = new HomePagerAdapter(activity.getSupportFragmentManager(), fragments);
         setAdapter(mAdapter);
     }

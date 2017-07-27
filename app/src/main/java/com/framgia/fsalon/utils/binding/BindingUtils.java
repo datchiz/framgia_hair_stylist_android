@@ -3,6 +3,7 @@ package com.framgia.fsalon.utils.binding;
 import android.databinding.BindingAdapter;
 import android.databinding.InverseBindingAdapter;
 import android.databinding.InverseBindingListener;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.framgia.fsalon.R;
 import com.framgia.fsalon.data.model.Stylist;
 import com.framgia.fsalon.screen.booking.BookingViewModel;
@@ -74,7 +76,7 @@ public class BindingUtils {
         };
         view.setOnItemSelectedListener(listener);
     }
-    
+
     @BindingAdapter("bind:viewPagerAdapter")
     public static void setViewPagerAdapter(ViewPager viewPager, PagerAdapter pagerAdapter) {
         viewPager.setAdapter(pagerAdapter);
@@ -94,5 +96,19 @@ public class BindingUtils {
     @BindingAdapter({"colorId"})
     public static void setcolorId(TextView view, int colorId) {
         view.setTextColor(view.getResources().getColor(colorId));
+    }
+
+    @BindingAdapter(value = {"bind:imageUrl", "bind:error"}, requireAll = false)
+    public static void loadImage(ImageView view, String imageUrl, Drawable error) {
+        if (error == null) {
+            Glide.with(view.getContext())
+                .load(imageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.ic_no_image)
+                .into(view);
+        } else {
+            Glide.with(view.getContext()).load(imageUrl).centerCrop().placeholder(error).into
+                (view);
+        }
     }
 }
