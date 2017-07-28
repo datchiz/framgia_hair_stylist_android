@@ -8,7 +8,7 @@ import android.util.Log;
 import java.lang.reflect.Field;
 
 import framgia.retrofitservicecreator.api.model.Respone;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by MyPC on 20/07/2017.

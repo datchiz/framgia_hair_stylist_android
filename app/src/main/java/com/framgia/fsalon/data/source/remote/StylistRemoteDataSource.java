@@ -8,8 +8,10 @@ import com.framgia.fsalon.utils.Utils;
 import java.util.List;
 
 import framgia.retrofitservicecreator.api.model.Respone;
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 /**
  * Created by THM on 7/20/2017.
@@ -22,12 +24,12 @@ public class StylistRemoteDataSource extends BaseRemoteDataSource implements Sty
     @Override
     public Observable<List<Stylist>> getAllStylists(int id) {
         return mFSalonApi.getStylistBySalonId(id).
-            flatMap(
-                new Func1<Respone<List<Stylist>>, Observable<List<Stylist>>>() {
-                    @Override
-                    public Observable<List<Stylist>> call(Respone<List<Stylist>> listRespone) {
-                        return Utils.getResponse(listRespone);
-                    }
-                });
+            flatMap(new Function<Respone<List<Stylist>>, ObservableSource<List<Stylist>>>() {
+                @Override
+                public ObservableSource<List<Stylist>> apply(@NonNull Respone<List<Stylist>> listRespone)
+                    throws Exception {
+                    return Utils.getResponse(listRespone);
+                }
+            });
     }
 }

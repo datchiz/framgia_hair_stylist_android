@@ -10,18 +10,18 @@ import java.util.List;
 import java.util.Map;
 
 import framgia.retrofitservicecreator.api.model.Respone;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-import rx.Observable;
 
 public interface FSalonApi {
 
     @POST("api/v0/login")
     Observable<Respone<UserRespone>> login(@Query("email_or_phone") String account,
-        @Query("password") String passWord);
+                                           @Query("password") String passWord);
 
     @GET("api/v0/get-salons")
     Observable<Respone<List<Salon>>> getSalon();

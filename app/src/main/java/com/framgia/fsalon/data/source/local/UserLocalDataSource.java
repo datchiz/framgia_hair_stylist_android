@@ -4,7 +4,8 @@ import com.framgia.fsalon.data.model.UserRespone;
 import com.framgia.fsalon.data.source.UserDataSource;
 import com.framgia.fsalon.data.source.local.sharepref.SharePreferenceApi;
 import com.google.gson.Gson;
-import rx.Observable;
+
+import io.reactivex.Observable;
 
 import static com.framgia.fsalon.data.source.local.sharepref.SharePreferenceKey.PREF_USER;
 

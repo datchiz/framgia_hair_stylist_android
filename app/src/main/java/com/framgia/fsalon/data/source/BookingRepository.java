@@ -2,7 +2,8 @@ package com.framgia.fsalon.data.source;
 
 import com.framgia.fsalon.data.model.BookingOder;
 import com.framgia.fsalon.data.model.BookingResponse;
-import rx.Observable;
+
+import io.reactivex.Observable;
 
 /**
  * Created by framgia on 7/21/17.

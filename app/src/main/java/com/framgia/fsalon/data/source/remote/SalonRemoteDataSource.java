@@ -5,9 +5,12 @@ import com.framgia.fsalon.data.source.SalonDataSource;
 import com.framgia.fsalon.data.source.api.FSalonApi;
 import com.framgia.fsalon.utils.Utils;
 import framgia.retrofitservicecreator.api.model.Respone;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+
 import java.util.List;
-import rx.Observable;
-import rx.functions.Func1;
 
 /**
  * Created by framgia on 7/20/17.
@@ -22,9 +25,10 @@ public class SalonRemoteDataSource extends BaseRemoteDataSource implements Salon
     @Override
     public Observable<List<Salon>> getAllSalons() {
         return mFSalonApi.getSalon()
-            .flatMap(new Func1<Respone<List<Salon>>, Observable<List<Salon>>>() {
+            .flatMap(new Function<Respone<List<Salon>>, ObservableSource<List<Salon>>>() {
                 @Override
-                public Observable<List<Salon>> call(Respone<List<Salon>> listRespone) {
+                public ObservableSource<List<Salon>> apply(@NonNull Respone<List<Salon>> listRespone)
+                    throws Exception {
                     return Utils.getResponse(listRespone);
                 }
             });
