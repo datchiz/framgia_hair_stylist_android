@@ -15,7 +15,7 @@ interface   LoginContract {
 
         void showProgressbar();
 
-        void onLoginSuccess();
+        void onCustomerLoginSuccess();
 
         void onLoginErrror(String message);
 
@@ -30,6 +30,8 @@ interface   LoginContract {
         void onInputAccountError();
 
         void onInputPassWordError();
+
+        void onAdminLoginSuccess();
     }
 
     /**

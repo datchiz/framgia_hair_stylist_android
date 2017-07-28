@@ -1,5 +1,7 @@
 package com.framgia.fsalon.screen.homeadmin;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,11 @@ import com.framgia.fsalon.databinding.ActivityAdminHomeBinding;
  */
 public class AdminHomeActivity extends AppCompatActivity {
     private AdminHomeContract.ViewModel mViewModel;
+
+    public static Intent getInstance(Context context) {
+        return new Intent(context, AdminHomeActivity.class)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

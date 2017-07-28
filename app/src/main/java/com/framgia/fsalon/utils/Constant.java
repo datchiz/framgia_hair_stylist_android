@@ -25,4 +25,11 @@ public class Constant {
         public static final String RENDER_BOOKING_ID = "render_booking_id";
         public static final String STYLIST_CHOSEN = "stylist_chosen";
     }
+
+    public class Permission {
+        public static final int PERMISSION_NOMAL = 0;
+        public static final int PERMISSION_ASSISTANT = 1;
+        public static final int PERMISSION_MAIN_WORKER = 2;
+        public static final int PERMISSION_ADMIN = 3;
+    }
 }

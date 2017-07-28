@@ -9,6 +9,7 @@ import android.view.View;
 import com.framgia.fsalon.BR;
 import com.framgia.fsalon.R;
 import com.framgia.fsalon.screen.home.HomeActivity;
+import com.framgia.fsalon.screen.homeadmin.AdminHomeActivity;
 import com.framgia.fsalon.utils.navigator.Navigator;
 
 /**
@@ -54,7 +55,7 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     }
 
     @Override
-    public void onLoginSuccess() {
+    public void onCustomerLoginSuccess() {
         mNavigator.startActivity(HomeActivity.getInstance(mNavigator.getContext()));
         mNavigator.finishActivity();
     }
@@ -143,5 +144,11 @@ public class LoginViewModel extends BaseObservable implements LoginContract.View
     public void onInputPassWordError() {
         mPassWordError = mContext.getString(R.string.msg_error_empty);
         notifyPropertyChanged(BR.passWordError);
+    }
+
+    @Override
+    public void onAdminLoginSuccess() {
+        mNavigator.startActivity(AdminHomeActivity.getInstance(mNavigator.getContext()));
+        mNavigator.finishActivity();
     }
 }

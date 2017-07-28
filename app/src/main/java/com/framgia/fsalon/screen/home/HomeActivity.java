@@ -17,7 +17,7 @@ public class HomeActivity extends AppCompatActivity {
     private HomeContract.ViewModel mViewModel;
 
     public static Intent getInstance(Context context) {
-        return new Intent(context, HomeActivity.class);
+        return new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 
     @Override
