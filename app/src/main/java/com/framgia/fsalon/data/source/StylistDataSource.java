@@ -4,7 +4,7 @@ import com.framgia.fsalon.data.model.Stylist;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by THM on 7/20/2017.

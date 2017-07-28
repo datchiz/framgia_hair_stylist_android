@@ -4,12 +4,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.framgia.fsalon.data.model.UserRespone;
 import com.framgia.fsalon.data.source.UserRepository;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.framgia.fsalon.utils.Constant.Permission.PERMISSION_ADMIN;
 
@@ -22,7 +24,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     private static final String TAG = LoginPresenter.class.getName();
     private final LoginContract.ViewModel mViewModel;
     private UserRepository mRepository;
-    private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     public LoginPresenter(LoginContract.ViewModel viewModel, UserRepository repository) {
         mViewModel = viewModel;
@@ -36,7 +38,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void onStop() {
-        mCompositeSubscriptions.clear();
+        mCompositeDisposable.clear();
     }
 
     @Override
@@ -44,55 +46,58 @@ public class LoginPresenter implements LoginContract.Presenter {
         if (!validateDataInput(account, passWord)) {
             return;
         }
-        Subscription subscription = mRepository.login(account, passWord)
+        Disposable disposable = mRepository.login(account, passWord)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe(new Action0() {
+            .doOnSubscribe(new Consumer<Disposable>() {
                 @Override
-                public void call() {
+                public void accept(@NonNull Disposable disposable) throws Exception {
                     mViewModel.showProgressbar();
                 }
-            })
-            .subscribe(new Action1<UserRespone>() {
+            }).subscribeWith(new DisposableObserver<UserRespone>() {
                 @Override
-                public void call(UserRespone userRespone) {
+                public void onNext(@NonNull UserRespone userRespone) {
                     loginWithPermission(userRespone.getUser().getPermission());
                     mRepository.saveCurrentUser(userRespone).subscribe();
                 }
-            }, new Action1<Throwable>() {
+
                 @Override
-                public void call(Throwable throwable) {
+                public void onError(@NonNull Throwable e) {
                     mViewModel.hideProgressbar();
-                    mViewModel.onLoginErrror(throwable.getMessage());
+                    mViewModel.onLoginErrror(e.getMessage());
                 }
-            }, new Action0() {
+
                 @Override
-                public void call() {
+                public void onComplete() {
                     mViewModel.hideProgressbar();
                 }
             });
-        mCompositeSubscriptions.add(subscription);
+        mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void getCurrentUser() {
-        Subscription subscription = mRepository.getCurrentUser()
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(Schedulers.io())
-            .subscribe(new Action1<UserRespone>() {
+        Disposable disposable = mRepository.getCurrentUser()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(new DisposableObserver<UserRespone>() {
                 @Override
-                public void call(UserRespone userRespone) {
+                public void onNext(@NonNull UserRespone userRespone) {
                     if (userRespone != null) {
                         loginWithPermission(userRespone.getUser().getPermission());
                     }
                 }
-            }, new Action1<Throwable>() {
+
                 @Override
-                public void call(Throwable throwable) {
-                    Log.d(TAG, "call: " + throwable.getMessage());
+                public void onError(@NonNull Throwable e) {
+                    Log.d(TAG, "call: " + e.getMessage());
+                }
+
+                @Override
+                public void onComplete() {
                 }
             });
-        mCompositeSubscriptions.add(subscription);
+        mCompositeDisposable.add(disposable);
     }
 
     public boolean validateDataInput(String account, String password) {

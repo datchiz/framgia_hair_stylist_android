@@ -10,8 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import framgia.retrofitservicecreator.api.model.Respone;
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 import static com.framgia.fsalon.utils.Constant.ApiParram.DATE;
 import static com.framgia.fsalon.utils.Constant.ApiParram.DEPARTMENT_ID;
@@ -38,10 +40,11 @@ public class BookingRemoteDataSource extends BaseRemoteDataSource implements Boo
             parram.put(STYLIST_ID, String.valueOf(stylelistId));
         }
         return mFSalonApi.getBookings(parram)
-            .flatMap(new Func1<Respone<BookingResponse>, Observable<BookingResponse>>() {
+            .flatMap(new Function<Respone<BookingResponse>, ObservableSource<BookingResponse>>() {
                 @Override
-                public Observable<BookingResponse> call(
-                    Respone<BookingResponse> bookingResponseRespone) {
+                public ObservableSource<BookingResponse> apply(
+                    @NonNull Respone<BookingResponse> bookingResponseRespone)
+                    throws Exception {
                     return Utils.getResponse(bookingResponseRespone);
                 }
             });
@@ -61,9 +64,11 @@ public class BookingRemoteDataSource extends BaseRemoteDataSource implements Boo
         parram.put(RENDER_BOOKING_ID, String.valueOf(renderBookingId));
         parram.put(STYLIST_CHOSEN, String.valueOf(stylistId));
         return mFSalonApi.book(parram)
-            .flatMap(new Func1<Respone<BookingOder>, Observable<BookingOder>>() {
+            .flatMap(new Function<Respone<BookingOder>, ObservableSource<BookingOder>>() {
                 @Override
-                public Observable<BookingOder> call(Respone<BookingOder> bookingOderRespone) {
+                public ObservableSource<BookingOder> apply(
+                    @NonNull Respone<BookingOder> bookingOderRespone)
+                    throws Exception {
                     return Utils.getResponse(bookingOderRespone);
                 }
             });

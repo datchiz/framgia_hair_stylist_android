@@ -6,8 +6,10 @@ import com.framgia.fsalon.data.source.api.FSalonApi;
 import com.framgia.fsalon.utils.Utils;
 
 import framgia.retrofitservicecreator.api.model.Respone;
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 /**
  * Created by MyPC on 20/07/2017.
@@ -21,9 +23,10 @@ public class UserRemoteDataSource extends BaseRemoteDataSource
     @Override
     public Observable<UserRespone> login(String account, String passWord) {
         return mFSalonApi.login(account, passWord).flatMap(
-            new Func1<Respone<UserRespone>, Observable<UserRespone>>() {
+            new Function<Respone<UserRespone>, ObservableSource<UserRespone>>() {
                 @Override
-                public Observable<UserRespone> call(Respone<UserRespone> userResponeRespone) {
+                public ObservableSource<UserRespone> apply(@NonNull Respone<UserRespone> userResponeRespone)
+                    throws Exception {
                     return Utils.getResponse(userResponeRespone);
                 }
             });

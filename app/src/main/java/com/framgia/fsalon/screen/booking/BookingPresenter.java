@@ -15,12 +15,13 @@ import com.framgia.fsalon.data.source.StylistRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.framgia.fsalon.utils.Constant.A_DAY;
 
@@ -31,7 +32,7 @@ import static com.framgia.fsalon.utils.Constant.A_DAY;
 public class BookingPresenter implements BookingContract.Presenter {
     private static final String TAG = BookingPresenter.class.getName();
     private final BookingContract.ViewModel mViewModel;
-    private CompositeSubscription mCompositeSubscriptions = new CompositeSubscription();
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private BookingRepository mBookingRepository;
     private SalonRepository mSalonRepository;
     private StylistRepository mStylistRepository;
@@ -53,131 +54,129 @@ public class BookingPresenter implements BookingContract.Presenter {
 
     @Override
     public void onStop() {
-        mCompositeSubscriptions.clear();
+        mCompositeDisposable.clear();
     }
 
     @Override
     public void getAllSalons() {
-        Subscription subscription = mSalonRepository.getAllSalons()
+        Disposable disposable = mSalonRepository.getAllSalons()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe(new Action0() {
+            .doOnSubscribe(new Consumer<Disposable>() {
                 @Override
-                public void call() {
+                public void accept(@NonNull Disposable disposable) throws Exception {
                     mViewModel.showProgressbar();
                 }
             })
-            .subscribe(new Action1<List<Salon>>() {
-                @Override
-                public void call(List<Salon> salons) {
-                    mViewModel.onGetSalonsSuccess(salons);
-                }
-            }, new Action1<Throwable>() {
-                @Override
-                public void call(Throwable throwable) {
-                    mViewModel.hideProgressbar();
-                    mViewModel.onError(throwable.getMessage());
-                }
-            }, new Action0() {
-                @Override
-                public void call() {
-                    mViewModel.hideProgressbar();
-                }
-            });
-        mCompositeSubscriptions.add(subscription);
+            .subscribeWith(
+                new DisposableObserver<List<Salon>>() {
+                    @Override
+                    public void onNext(@NonNull List<Salon> salons) {
+                        mViewModel.onGetSalonsSuccess(salons);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mViewModel.hideProgressbar();
+                        mViewModel.onError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mViewModel.hideProgressbar();
+                    }
+                });
+        mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void getAllStylists(int id) {
-        Subscription subscription = mStylistRepository.getAllStylists(id)
+        Disposable disposable = mStylistRepository.getAllStylists(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe(new Action0() {
+            .doOnSubscribe(new Consumer<Disposable>() {
                 @Override
-                public void call() {
+                public void accept(@NonNull Disposable disposable) throws Exception {
                     mViewModel.showProgressbar();
                 }
-            })
-            .subscribe(new Action1<List<Stylist>>() {
+            }).subscribeWith(new DisposableObserver<List<Stylist>>() {
                 @Override
-                public void call(List<Stylist> stylists) {
+                public void onNext(@NonNull List<Stylist> stylists) {
                     mViewModel.onGetStylistSuccess(stylists);
                 }
-            }, new Action1<Throwable>() {
+
                 @Override
-                public void call(Throwable throwable) {
+                public void onError(@NonNull Throwable e) {
                     mViewModel.hideProgressbar();
-                    mViewModel.onError(throwable.getMessage());
+                    mViewModel.onError(e.getMessage());
                 }
-            }, new Action0() {
+
                 @Override
-                public void call() {
+                public void onComplete() {
                     mViewModel.hideProgressbar();
                 }
             });
-        mCompositeSubscriptions.add(subscription);
+        mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void getBookings(int salonId, long time, int stylelistId) {
-        Subscription subscription = mBookingRepository.getBookings(salonId, time, stylelistId)
+        Disposable disposable = mBookingRepository.getBookings(salonId, time, stylelistId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe(new Action0() {
+            .doOnSubscribe(new Consumer<Disposable>() {
                 @Override
-                public void call() {
+                public void accept(@NonNull Disposable disposable) throws Exception {
                     mViewModel.showProgressbar();
                 }
-            })
-            .subscribe(new Action1<BookingResponse>() {
+            }).subscribeWith(new DisposableObserver<BookingResponse>() {
                 @Override
-                public void call(BookingResponse bookingResponse) {
+                public void onNext(@NonNull BookingResponse bookingResponse) {
                     mViewModel.onGetBookingSuccess(bookingResponse);
                 }
-            }, new Action1<Throwable>() {
+
                 @Override
-                public void call(Throwable throwable) {
+                public void onError(@NonNull Throwable e) {
                     mViewModel.hideProgressbar();
-                    mViewModel.onError(throwable.getMessage());
+                    mViewModel.onError(e.getMessage());
                 }
-            }, new Action0() {
+
                 @Override
-                public void call() {
+                public void onComplete() {
                     mViewModel.hideProgressbar();
                 }
             });
-        mCompositeSubscriptions.add(subscription);
+        mCompositeDisposable.add(disposable);
     }
 
     @Override
     public void getBookings(int salonId, long time) {
-        Subscription subscription = mBookingRepository.getBookings(salonId, time)
+        Disposable disposable = mBookingRepository.getBookings(salonId, time)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe(new Action0() {
+            .doOnSubscribe(new Consumer<Disposable>() {
                 @Override
-                public void call() {
+                public void accept(@NonNull Disposable disposable) throws Exception {
                     mViewModel.showProgressbar();
                 }
-            })
-            .subscribe(new Action1<BookingResponse>() {
+            }).subscribeWith(new DisposableObserver<BookingResponse>() {
                 @Override
-                public void call(BookingResponse bookingResponse) {
+                public void onNext(@NonNull BookingResponse bookingResponse) {
                     mViewModel.onGetBookingSuccess(bookingResponse);
                 }
-            }, new Action1<Throwable>() {
+
                 @Override
-                public void call(Throwable throwable) {
+                public void onError(@NonNull Throwable e) {
                     mViewModel.hideProgressbar();
-                    mViewModel.onError(throwable.getMessage());
+                    mViewModel.onError(e.getMessage());
                 }
-            }, new Action0() {
+
                 @Override
-                public void call() {
+                public void onComplete() {
                     mViewModel.hideProgressbar();
                 }
             });
-        mCompositeSubscriptions.add(subscription);
+        mCompositeDisposable.add(disposable);
     }
 
     @Override
@@ -200,33 +199,32 @@ public class BookingPresenter implements BookingContract.Presenter {
         if (!validateDataInput(phone, name, renderBookingId)) {
             return;
         }
-        Subscription subscription = mBookingRepository.book(phone, name, renderBookingId, stylistId)
+        Disposable disposable = mBookingRepository.book(phone, name, renderBookingId, stylistId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe(new Action0() {
+            .doOnSubscribe(new Consumer<Disposable>() {
                 @Override
-                public void call() {
+                public void accept(@NonNull Disposable disposable) throws Exception {
                     mViewModel.showProgressbar();
                 }
-            })
-            .subscribe(new Action1<BookingOder>() {
+            }).subscribeWith(new DisposableObserver<BookingOder>() {
                 @Override
-                public void call(BookingOder bookingOder) {
+                public void onNext(@NonNull BookingOder bookingOder) {
                     mViewModel.onBookSuccess(bookingOder);
                 }
-            }, new Action1<Throwable>() {
+
                 @Override
-                public void call(Throwable throwable) {
+                public void onError(@NonNull Throwable e) {
                     mViewModel.hideProgressbar();
-                    mViewModel.onError(throwable.getMessage());
+                    mViewModel.onError(e.getMessage());
                 }
-            }, new Action0() {
+
                 @Override
-                public void call() {
+                public void onComplete() {
                     mViewModel.hideProgressbar();
                 }
             });
-        mCompositeSubscriptions.add(subscription);
+        mCompositeDisposable.add(disposable);
     }
 
     public boolean validateDataInput(String phone, String name, int renderBookingId) {
