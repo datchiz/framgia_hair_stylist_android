@@ -83,7 +83,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             .subscribeWith(new DisposableObserver<UserRespone>() {
                 @Override
                 public void onNext(@NonNull UserRespone userRespone) {
-                    if (userRespone != null) {
+                    if (userRespone.getUser() != null) {
                         loginWithPermission(userRespone.getUser().getPermission());
                     }
                 }

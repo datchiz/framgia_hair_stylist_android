@@ -26,7 +26,8 @@ public class StylistRemoteDataSource extends BaseRemoteDataSource implements Sty
         return mFSalonApi.getStylistBySalonId(id).
             flatMap(new Function<Respone<List<Stylist>>, ObservableSource<List<Stylist>>>() {
                 @Override
-                public ObservableSource<List<Stylist>> apply(@NonNull Respone<List<Stylist>> listRespone)
+                public ObservableSource<List<Stylist>> apply(
+                    @NonNull Respone<List<Stylist>> listRespone)
                     throws Exception {
                     return Utils.getResponse(listRespone);
                 }

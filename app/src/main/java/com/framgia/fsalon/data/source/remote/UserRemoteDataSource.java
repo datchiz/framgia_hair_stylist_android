@@ -25,7 +25,8 @@ public class UserRemoteDataSource extends BaseRemoteDataSource
         return mFSalonApi.login(account, passWord).flatMap(
             new Function<Respone<UserRespone>, ObservableSource<UserRespone>>() {
                 @Override
-                public ObservableSource<UserRespone> apply(@NonNull Respone<UserRespone> userResponeRespone)
+                public ObservableSource<UserRespone> apply(
+                    @NonNull Respone<UserRespone> userResponeRespone)
                     throws Exception {
                     return Utils.getResponse(userResponeRespone);
                 }
