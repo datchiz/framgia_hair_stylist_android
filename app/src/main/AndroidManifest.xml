@@ -30,16 +30,10 @@
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".screen.homeadmin.AdminHomeActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".screen.success.SuccessActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme">
+            android:screenOrientation="portrait">
         </activity>
         <meta-data
             android:name="io.fabric.ApiKey"

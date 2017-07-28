@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import retrofit2.Response;
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.adapter.rxjava2.HttpException;
 
 public final class BaseException extends RuntimeException {
     @Type

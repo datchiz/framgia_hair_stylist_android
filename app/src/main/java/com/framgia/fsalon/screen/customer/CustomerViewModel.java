@@ -6,10 +6,6 @@ import android.databinding.Bindable;
 import android.support.v4.app.FragmentActivity;
 
 import com.framgia.fsalon.BR;
-import com.framgia.fsalon.data.model.BookingCustomer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Exposes the data to be used in the Customer screen.

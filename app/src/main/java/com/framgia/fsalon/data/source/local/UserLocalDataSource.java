@@ -24,7 +24,12 @@ public class UserLocalDataSource implements UserDataSource.LocalDataSource {
     @Override
     public Observable<UserRespone> getCurrentUser() {
         String json = mSharePreference.get(PREF_USER, String.class);
-        return Observable.just(new Gson().fromJson(json, UserRespone.class));
+        UserRespone userRespone = new Gson().fromJson(json, UserRespone.class);
+        if (userRespone == null) {
+            return Observable.error(new NullPointerException());
+        } else {
+            return Observable.just(userRespone);
+        }
     }
 
     @Override
