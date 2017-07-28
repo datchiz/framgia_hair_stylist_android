@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_circle"
                     android:gravity="center"
-                    android:text="@{customer.name.substring(0, 1)}"
+                    android:text="@{customer.name.substring(0, 1).toUpperCase()}"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/sp_20"
                     android:visibility="@{customer.avatar == null ? View.VISIBLE : View.GONE}"/>
