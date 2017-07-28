@@ -11,6 +11,8 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.framgia.fsalon.utils.Constant.Permission.PERMISSION_ADMIN;
+
 /**
  * Listens to user actions from the UI ({@link LoginActivity}), retrieves the data and updates
  * the UI as required.
@@ -54,7 +56,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             .subscribe(new Action1<UserRespone>() {
                 @Override
                 public void call(UserRespone userRespone) {
-                    mViewModel.onLoginSuccess();
+                    loginWithPermission(userRespone.getUser().getPermission());
                     mRepository.saveCurrentUser(userRespone).subscribe();
                 }
             }, new Action1<Throwable>() {
@@ -81,7 +83,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 @Override
                 public void call(UserRespone userRespone) {
                     if (userRespone != null) {
-                        mViewModel.onLoginSuccess();
+                        loginWithPermission(userRespone.getUser().getPermission());
                     }
                 }
             }, new Action1<Throwable>() {
@@ -104,5 +106,13 @@ public class LoginPresenter implements LoginContract.Presenter {
             mViewModel.onInputPassWordError();
         }
         return isValid;
+    }
+
+    private void loginWithPermission(int permission) {
+        if (permission == PERMISSION_ADMIN) {
+            mViewModel.onAdminLoginSuccess();
+        } else {
+            mViewModel.onCustomerLoginSuccess();
+        }
     }
 }
