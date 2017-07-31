@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply from: '../autodimension.gradle'
+
+/**
+ * start config and check ci*/
 apply from: '../checkci.gradle'
 
 android {
