@@ -32,7 +32,7 @@
     <suppress checks="[a-zA-Z0-9]*" files=".*_.*Factory.java" />
     <suppress checks="[a-zA-Z0-9]*" files=".*ViewInjector.java" />
     <suppress checks="[a-zA-Z0-9]*" files=".*_MembersInjector.java" />
-    <suppress checks="MethodNameCheck" files=".*/util/L.java" /><!--Case use for requestModel-->
+    <suppress checks="MethodNameCheck" files=".*/util/L.java" /><!--Case use for model-->
     <suppress checks="AvoidStarImport" files=".*.java" /> <!-- Disable import-->
     <suppress checks="CustomImportOrder" files=".*.java" /> <!-- Disable CustomImportOrder-->
 
