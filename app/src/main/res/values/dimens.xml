@@ -35,4 +35,7 @@
     <dimen name="sp_29">29sp</dimen>
     <dimen name="sp_13">13sp</dimen>
     <dimen name="dp_37">37sp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
 </resources>

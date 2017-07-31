@@ -27,4 +27,6 @@
     <color name="color_grey_200">#EEEEEE</color>
     <color name="color_accent_700">#FF6A00</color>
     <color name="color_yellow_200">#FFFF9D</color>
+    <color name="color_black_transprarent">#B2000000</color>
+    <color name="color_white_transparent">#ccffffff</color>
 </resources>
